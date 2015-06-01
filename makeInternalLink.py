@@ -35,9 +35,8 @@ def replaceInternalLinks(text):
         inner = text[s+2:e-2]
         # find first |
         pipe = inner.find('|')
-        if pipe < 0:
-            title = inner
-            label = title
+        if pipe < 0: # omit if only a link
+            label = ""
         else:
             title = inner[:pipe].rstrip()
             # find last |

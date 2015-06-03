@@ -9,6 +9,7 @@ This code is built upon @attardi's `WikiExtractor.py` (see down below for more i
 * Directly process text instead of working on dumps.
 * Migrated the code from Python 2 to Python 3.
 * Code cleanup (removed unused code and SoC).
+* Replace [many symbols](removeSymbols.py) with a space.
 
 ## WikiExtractor.py
 [WikiExtractor.py](http://medialab.di.unipi.it/wiki/Wikipedia_Extractor) is a Python script that extracts and cleans text from a [Wikipedia database dump](http://download.wikimedia.org/). The tool was written by [Giuseppe Attardi](https://github.com/attardi) and released under a GPLv3 licence. For further information, see the [project Home Page](http://medialab.di.unipi.it/wiki/Wikipedia_Extractor) or the [Wiki](https://github.com/attardi/wikiextractor/wiki).

@@ -111,14 +111,11 @@ def replaceExternalLinks(text):
 # Function applied to wikiLinks
 def makeExternalLink(title, anchor):
     colon = title.find(':')
-    if colon > 0 and title[:colon] not in acceptedNamespaces:
+    if colon > 0:
         return ''
     if colon == 0:
         # drop also :File:
         colon2 = title.find(':', colon+1)
-        if colon2 > 1 and title[colon+1:colon2] not in acceptedNamespaces:
+        if colon2 > 1:
             return ''
-    if Extractor.keepLinks:
-        return '<a href="%s">%s</a>' % (urllib.quote(title.encode('utf-8')), anchor)
-    else:
-        return anchor
+    return anchor

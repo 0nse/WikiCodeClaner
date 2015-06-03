@@ -13,10 +13,10 @@ listItem = { '*': '<li>%s</li>', '#': '<li>%s</<li>', ';': '<dt>%s</dt>',
 # Match preformatted lines
 preformatted = re.compile(r'^ .*?$')
 
-def appendPeriod(title):
+def appendSpace(title):
     """End the title with a period if it does not end in ? or !"""
-    if title and title[-1] not in '!?':
-        title += '.'
+    if title and title[-1] not in ' ':
+        title += ' '
     return title
 
 def compact(text):
@@ -37,7 +37,7 @@ def compact(text):
         if m:
             title = m.group(2)
             lev = len(m.group(1))
-            title = appendPeriod(title)
+            title = appendSpace(title)
             isEmptySection = True
             out += title
             continue
@@ -46,7 +46,7 @@ def compact(text):
             title = line[2:]
             if line.endswith('++'):
                 title = line[:-2]
-            title = appendPeriod(title)
+            title = appendSpace(title)
             out += title
             continue
         # handle indents

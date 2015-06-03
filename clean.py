@@ -3,7 +3,7 @@
 import re
 import sys
 from dropNested import *
-from makeInternalLink import replaceInternalLinks
+from links import replaceInternalLinks, replaceExternalLinks
 from MagicWords import magicWordsRE
 from unescape import unescape
 from ignoredTags import getIgnoredTags
@@ -64,7 +64,7 @@ def clean(text):
     text = dropNested(text, r'{\|', r'\|}')
 
     # replace external links
-    # text = replaceExternalLinks(text)
+    text = replaceExternalLinks(text)
 
     # replace internal links
     text = replaceInternalLinks(text)

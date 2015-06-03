@@ -8,6 +8,7 @@ from MagicWords import magicWordsRE
 from unescape import unescape
 from ignoredTags import getIgnoredTags
 from compact import compact
+from removeSymbols import removeSymbols
 
 selfClosingTags = [ 'br', 'hr', 'nobr', 'ref', 'references', 'nowiki' ]
 
@@ -28,9 +29,6 @@ syntaxhighlight = re.compile('&lt;syntaxhighlight .*?&gt;(.*?)&lt;/syntaxhighlig
 
 # Matches space
 spaces = re.compile(r' {2,}')
-
-# Matches dots
-dots = re.compile(r'\.{4,}')
 
 # Drop these elements from article text
 discardElements = [
@@ -134,15 +132,16 @@ def clean(text):
 
     # Cleanup text
     text = text.replace('\t', ' ')
-    text = spaces.sub(' ', text)
-    text = dots.sub('...', text)
     text = re.sub(u' (,:\.\)\]»)', r'\1', text)
     text = re.sub(u'(\[\(«) ', r'\1', text)
     text = re.sub(r'\n\W+?\n', '\n', text, flags=re.U) # lines with only punctuations
-    text = text.replace(',,', ',').replace(',.', '.')
 
     # Remove lists, tables and such
     text = compact(text)
+
+    # Remove symbols and reduce multiple successive spaces to one
+    text = removeSymbols(text)
+    text = spaces.sub(' ', text)
 
     print(text)
 

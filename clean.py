@@ -143,7 +143,7 @@ def clean(text):
     text = removeSymbols(text)
     text = spaces.sub(' ', text)
 
-    print(text)
+    return text
 
 if __name__ == "__main__":
     clean(sys.argv[1])

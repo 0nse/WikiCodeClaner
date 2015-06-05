@@ -50,7 +50,7 @@ quote_quote = re.compile(r'""([^"]*?)""')
 # The buggy template {{Template:T}} has a comment terminating with just "->"
 comment = re.compile(r'<!--.*?-->', re.DOTALL)
 
-def clean(text):
+def clean(text, hasDebugFlag=False):
     """
     Transforms wiki markup.
     @see https://www.mediawiki.org/wiki/Help:Formatting
@@ -143,7 +143,17 @@ def clean(text):
     text = removeSymbols(text)
     text = spaces.sub(' ', text)
 
+    if hasDebugFlag:
+        print(text)
     return text
 
 if __name__ == "__main__":
-    clean(sys.argv[1])
+    import argparse
+    parser = argparse.ArgumentParser(description='Clean text from WikiCode and other symbols, leaving only space separated words.')
+    parser.add_argument('text', metavar='"some text"', type=str,
+                        help='A text as string that should be cleaned.')
+
+    parser.add_argument('-d', '--debug', dest='hasDebugFlag', action='store_true',
+                        help='If this parameter is passed, the result is also printed to stdout.')
+    args = parser.parse_args()
+    clean(args.text, args.hasDebugFlag)

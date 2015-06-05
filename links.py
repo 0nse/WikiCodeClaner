@@ -77,10 +77,11 @@ EXT_IMAGE_REGEX = re.compile(
     re.X | re.S | re.U)
 
 def replaceExternalLinks(text):
-    s = ''
+    textBeforeURI = ''
     cur = 0
+
     for m in ExtLinkBracketedRegex.finditer(text):
-        s += text[cur:m.start()]
+        textBeforeURI += text[cur:m.start()]
         cur = m.end()
 
         url = m.group(1)
@@ -100,22 +101,5 @@ def replaceExternalLinks(text):
         if m: # external image, remove it
             label = ''
 
-        # Use the encoded URL
-        # This means that users can paste URLs directly into the text
-        # Funny characters like ö aren't valid in URLs anyway
-        # This was changed in August 2004
-        s += makeExternalLink(url, label) #+ trail
-
-    return s + text[cur:]
-
-# Function applied to wikiLinks
-def makeExternalLink(title, anchor):
-    colon = title.find(':')
-    if colon > 0:
-        return ''
-    if colon == 0:
-        # drop also :File:
-        colon2 = title.find(':', colon+1)
-        if colon2 > 1:
-            return ''
-    return anchor
+    textAfterURI = text[cur:]
+    return textBeforeURI + (label if label else '') + textAfterURI

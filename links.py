@@ -77,7 +77,7 @@ EXT_IMAGE_REGEX = re.compile(
     re.X | re.S | re.U)
 
 def replaceExternalLinks(text):
-    textBeforeURI = ''
+    textBeforeURI = label = ''
     cur = 0
 
     for m in ExtLinkBracketedRegex.finditer(text):

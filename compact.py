@@ -26,7 +26,6 @@ def compact(text):
 
     out = ""                    # list of paragraph
     isEmptySection = False      # empty sections are discarded
-    listLevel = ''              # nesting of lists
 
     for line in text.split('\n'):
 
@@ -53,14 +52,6 @@ def compact(text):
         elif line[0] == ':':
             out += line.lstrip(':*#;')
             continue
-        # handle lists
-        elif line[0] in '*#;:':
-                continue
-        elif len(listLevel):
-            for c in reversed(listLevel):
-                out += listClose[c]
-            listLevel = []
-
         # Drop residuals of lists
         elif line[0] in '{|' or line[-1] == '}':
             continue

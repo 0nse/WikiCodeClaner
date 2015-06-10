@@ -32,7 +32,7 @@ spaces = re.compile(r' {2,}')
 
 # Drop these elements from article text
 discardElements = [
-        'gallery', 'timeline', 'noinclude', 'pre',
+        'gallery', 'timeline', 'noinclude', 'pre', 'includeonly',
         'table', 'tr', 'td', 'th', 'caption', 'div',
         'form', 'input', 'select', 'option', 'textarea',
         'ul', 'li', 'ol', 'dl', 'dt', 'dd', 'menu', 'dir',

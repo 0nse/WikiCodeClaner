@@ -3,9 +3,6 @@
 import re
 # Extract Template definition
 
-reNoinclude = re.compile(r'<noinclude>(?:.*?)</noinclude>', re.DOTALL)
-reIncludeonly = re.compile(r'<includeonly>|</includeonly>', re.DOTALL)
-
 templates = {}
 redirects = {}
 

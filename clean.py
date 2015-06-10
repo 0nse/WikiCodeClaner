@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 import re
 import sys
-from dropNested import *
-from links import replaceInternalLinks, replaceExternalLinks
 from MagicWords import magicWordsRE
-from unescape import unescape
-from ignoredTags import getIgnoredTags
 from compact import compact
+from dropNested import *
+from ignoredTags import getIgnoredTags
+from links import replaceInternalLinks, replaceExternalLinks
 from removeSymbols import removeSymbols
+from signature import removeSignature
+from unescape import unescape
 
 selfClosingTags = [ 'br', 'hr', 'nobr', 'ref', 'references', 'nowiki' ]
 
@@ -60,6 +61,9 @@ def clean(text, hasDebugFlag=False):
 
     # Drop tables
     text = dropNested(text, r'{\|', r'\|}')
+
+    # Remove any found signatures and timestamps
+    text = removeSignature(text)
 
     # replace external links
     text = replaceExternalLinks(text)

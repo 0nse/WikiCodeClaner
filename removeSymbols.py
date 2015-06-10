@@ -1,5 +1,5 @@
 import re
-# mash all successive dashes (two or more):
+# match all successive dashes (two or more):
 dashes = re.compile(r"-{2,}")
 dashesNotHyphens = re.compile(r"[^\w](-)[^\w]")
 

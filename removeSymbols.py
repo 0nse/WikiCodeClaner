@@ -9,10 +9,13 @@ def removeSymbols(text):
 
     # string.punctuation also includes "-" which we want to keep.
     # Furthermore, we also want to remove some additional symbols:
-    for c in "<>|[]{}()@#$€£%&*_=+,.?!'\"«»“”;:/\\~`0123456789":
+    for c in "<>|[]{}()@#$€£%&*_=+,.?!\"«»“”;:/\\~`0123456789":
         # it's faster to determine this first instead of blindly replacing:
         if c in text:
             text = text.replace(c, " ")
+    # Remove apostrophes so that we end up with "dont", "wont", "im"
+    # "isnt", "arent", "peters" and so forth:
+    text = text.replace("'", "")
 
     # replace multiple dashes with space:
     text = dashes.sub(" ", text)

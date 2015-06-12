@@ -5,14 +5,6 @@ import re
 # skip level 1, it is page name level
 section = re.compile(r'(==+)\s*(.*?)\s*\1')
 
-listOpen = { '*': '<ul>', '#': '<ol>', ';': '<dl>', ':': '<dl>' }
-listClose = { '*': '</ul>', '#': '</ol>', ';': '</dl>', ':': '</dl>' }
-listItem = { '*': '<li>%s</li>', '#': '<li>%s</<li>', ';': '<dt>%s</dt>',
-             ':': '<dd>%s</dd>' }
-
-# Match preformatted lines
-preformatted = re.compile(r'^ .*?$')
-
 def appendSpace(title):
     """End the title with a period if it does not end in ? or !"""
     if title and title[-1] not in ' ':
@@ -63,9 +55,5 @@ def compact(text):
             isEmptySection = False
         elif not isEmptySection:
             out += line
-        # dangerous
-        # # Drop preformatted
-        # elif line[0] == ' ':
-        #     continue
 
     return out

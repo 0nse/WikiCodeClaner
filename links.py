@@ -44,7 +44,7 @@ def replaceInternalLinks(text):
             title = inner[:pipe].rstrip()
             # find last |
             curp = pipe+1
-            if not inner[:pipe] == "Category:Relisted AfD debates":
+            if not inner[:pipe].lower() == "category:relisted afd debates":
                 for s1,e1 in findBalanced(inner, ['[['], [']]']):
                     last = inner.rfind('|', curp, s1)
                     if last >= 0:

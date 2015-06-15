@@ -15,6 +15,9 @@ def replaceInternalLinks(text):
     [[title |...|label]]trail
 
     with title concatenated with trail, when present, e.g. 's' for plural.
+
+    Furthermore, link texts' of links referring to Category:Relisted AfD Debates
+    will be ignored.
     """
     # call this after removal of external links, so we need not worry about
     # triple closing ]]].
@@ -41,12 +44,15 @@ def replaceInternalLinks(text):
             title = inner[:pipe].rstrip()
             # find last |
             curp = pipe+1
-            for s1,e1 in findBalanced(inner, ['[['], [']]']):
-                last = inner.rfind('|', curp, s1)
-                if last >= 0:
-                    pipe = last # advance
-                curp = e1
-            label = inner[pipe+1:].strip()
+            if not inner[:pipe] == "Category:Relisted AfD debates":
+                for s1,e1 in findBalanced(inner, ['[['], [']]']):
+                    last = inner.rfind('|', curp, s1)
+                    if last >= 0:
+                        pipe = last # advance
+                    curp = e1
+                label = inner[pipe+1:].strip()
+            else:
+                label = ""
         res += text[cur:s] + label + trail
         cur = end
     return res + text[cur:]

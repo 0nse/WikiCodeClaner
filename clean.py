@@ -151,13 +151,44 @@ def clean(text, hasDebugFlag=False):
         print(text)
     return text
 
+
+def printLicence():
+    """Print the licence if the file exists/is readable."""
+    visualSeparator = '=' * 72
+    print("""%s
+This program was released under a GPLv3 licence. It should have been
+bundled with the appropriate licence which will be printed next. If this
+is not the case, please refer to <http://www.gnu.org/licenses/>.
+%s""" % (visualSeparator, visualSeparator))
+    try:
+        licenceFile = open('LICENSE', 'r')
+        print(licenceFile.read())
+    except:
+        pass
+
+
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description='Clean text from WikiCode and other symbols, leaving only space separated words.')
-    parser.add_argument('text', metavar='"some text"', type=str,
+    parser = argparse.ArgumentParser(description='Clean text from WikiCode and other symbols, leaving only space separated words.',
+                                     epilog="""
+                                     WikiCodeCleaner, Copyright (C) 2015 Giuseppe Attardi, Michael Ruster.
+                                     WikiCodeCleaner comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. Launch this program with `licence' for details.
+                                     """)
+    subparsers = parser.add_subparsers(help='XXXhelp for subcommand', dest='option')
+    subparsers.required=True
+
+    parser_clean = subparsers.add_parser('clean', help='Parse the provided text and clean it from WikiCode and other symbols.')
+    parser_clean.add_argument('text', metavar='"some text"', type=str,
                         help='A text as string that should be cleaned.')
 
-    parser.add_argument('-d', '--debug', dest='hasDebugFlag', action='store_true',
+    parser_clean.add_argument('-d', '--debug', dest='hasDebugFlag', action='store_true',
                         help='If this parameter is passed, the result is also printed to stdout.')
+
+
+    parser_licence = subparsers.add_parser('licence', help='Prints the GPL licence under which this program was released.')
+
     args = parser.parse_args()
-    clean(args.text, args.hasDebugFlag)
+    if args.option == 'clean':
+        clean(args.text, args.hasDebugFlag)
+    else:
+        printLicence()

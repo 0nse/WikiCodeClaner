@@ -53,7 +53,7 @@ def replaceInternalLinks(text):
                 label = inner[pipe+1:].strip()
             else:
                 label = ""
-        res += text[cur:s] + label + trail
+        res += " ".join([text[cur:s], label, trail])
         cur = end
     return res + text[cur:]
 

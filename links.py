@@ -108,4 +108,4 @@ def replaceExternalLinks(text):
             label = ''
 
     textAfterURI = text[cur:]
-    return textBeforeURI + (label if label else '') + textAfterURI
+    return " ".join([textBeforeURI, (label if label else ''), textAfterURI])

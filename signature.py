@@ -2,9 +2,9 @@ import re
 
 # ([[User talk:Any text|Any text]]) -- User_talk is also possible
 talk = "\[\[User[ |_]talk:[^\]]+\]\]"
-talkRe = re.compile("(?i)" + talk)
+talkRe = re.compile(r"(?i)" + talk)
 
-contribsRe = re.compile("(?i)\[\[Special:Contributions/[^\]]+\]\]")
+contribsRe = re.compile(r"(?i)\[\[Special:Contributions/[^\]]+\]\]")
 # [[User:Any text|Any text]] talkRe -- the mid bar is optional:
 userRe = re.compile(r"(?i)\[\[User:[^\]]+\]\] \(" + talk + "\)")
 # e.g. 13:41, 9 June 2015 (UTC) -- the spaces after the comma and before the bracket are optional:

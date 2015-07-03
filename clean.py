@@ -51,6 +51,9 @@ quote_quote = re.compile(r'""([^"]*?)""')
 # The buggy template {{Template:T}} has a comment terminating with just "->"
 comment = re.compile(r'<!--.*?-->', re.DOTALL)
 
+# Compute regular expression patterns for all ignored tags once
+ignored_tag_patterns = getIgnoredTags()
+
 def clean(text, hasDebugFlag=False):
     """
     Transforms wiki markup.
@@ -106,7 +109,6 @@ def clean(text, hasDebugFlag=False):
             spans.append((m.start(), m.end()))
 
     # Drop ignored tags
-    ignored_tag_patterns = getIgnoredTags()
     for left, right in ignored_tag_patterns:
         for m in left.finditer(text):
             spans.append((m.start(), m.end()))

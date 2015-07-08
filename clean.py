@@ -176,7 +176,7 @@ if __name__ == "__main__":
                                      WikiCodeCleaner, Copyright (C) 2015 Giuseppe Attardi, Michael Ruster.
                                      WikiCodeCleaner comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under certain conditions. Launch this program with `licence' for details.
                                      """)
-    subparsers = parser.add_subparsers(help='XXXhelp for subcommand', dest='option')
+    subparsers = parser.add_subparsers(help='Decide between cleaning or showing the software licence.', dest='option')
     subparsers.required=True
 
     parser_clean = subparsers.add_parser('clean', help='Parse the provided text and clean it from WikiCode and other symbols.')

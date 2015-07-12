@@ -132,14 +132,14 @@ def clean(text, hasDebugFlag=False):
             text = text.replace(match.group(), '%s_%d' % (placeholder, index))
             index += 1
 
-    text = text.replace('<<', u'«').replace('>>', u'»')
+    text = text.replace('<<', '«').replace('>>', '»')
 
     #############################################
 
     # Cleanup text
     text = text.replace('\t', ' ')
-    text = re.sub(u' (,:\.\)\]»)', r'\1', text)
-    text = re.sub(u'(\[\(«) ', r'\1', text)
+    text = re.sub(' (,:\.\)\]»)', r'\1', text)
+    text = re.sub('(\[\(«) ', r'\1', text)
     text = re.sub(r'\n\W+?\n', '\n', text, flags=re.U) # lines with only punctuations
 
     # Remove lists, tables and such

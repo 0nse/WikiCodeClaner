@@ -39,7 +39,7 @@ def replaceInternalLinks(text):
         # find first |
         pipe = inner.find('|')
         if pipe < 0: # omit if only a link
-            label = ""
+            label = processPotentialWikiLink(inner, '').strip()
         else:
             title = inner[:pipe].rstrip()
             # find last |
@@ -51,11 +51,30 @@ def replaceInternalLinks(text):
                         pipe = last # advance
                     curp = e1
                 label = inner[pipe+1:].strip()
+
+                label = processPotentialWikiLink(inner[:pipe], label)
             else:
                 label = ""
         res += " ".join([text[cur:s], label, trail])
         cur = end
     return res + text[cur:]
+
+def processPotentialWikiLink(link, label):
+    """
+    If we deal with a link to a Wikipedia meta page (starting with 'WP:'
+    or 'Wikipedia:', we want to be able to analyse this later. Hence,
+    we add this link (without colon) to the label iff a later alt text
+    (if any) does not already contains it. Otherwise, we would count it
+    twice.
+    """
+    link = link.lower()
+    if link.startswith('wp:') or link.startswith('wikipedia:'):
+        # Test e.g. for [[WP:CIVIL|see WP:CIVIL]]:
+        if not label or link not in label: # both are different, thus important:
+            label = '%s %s' % (link.replace(':', ''), label)
+        else: # Link text contains WikiLink; remove first colon:
+            label = label.replace(':', '', 1)
+    return label
 
 # ----------------------------------------------------------------------
 # External links

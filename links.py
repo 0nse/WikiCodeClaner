@@ -67,16 +67,17 @@ def processPotentialWikiLink(link, label):
     (if any) does not already contains it. Otherwise, we would count it
     twice.
     """
-    link = link.lower()
-    if link.startswith('wp:') or link.startswith('wikipedia:'):
+    linkLowered = link.lower()
+    if linkLowered.startswith('wp:') or linkLowered.startswith('wikipedia:'):
+        linkMerged = link.replace(':', '').replace(' ', '')
+
         # Test e.g. for [[WP:CIVIL|see WP:CIVIL]]:
-        if not label or link not in label: # both are different, thus important:
-            link = link.replace(':', '').replace(' ', '')
-            label = '%s %s' % (link, label)
+        position = label.lower().find(linkLowered)
+        if not label or position < 0: # both are different, thus important:
+            label = '%s %s' % (linkMerged, label)
         else: # Link text contains WikiLink; remove first colon:
-            # We can't remove spaces as we do not know where the WikiLink
-            # ends and where other text starts:
-            label = label.replace(':', '', 1)
+            endPosition = position + len(link)
+            label = ' '.join([ label[:position], linkMerged, label[endPosition:] ])
     return label
 
 # ----------------------------------------------------------------------

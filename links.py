@@ -71,8 +71,11 @@ def processPotentialWikiLink(link, label):
     if link.startswith('wp:') or link.startswith('wikipedia:'):
         # Test e.g. for [[WP:CIVIL|see WP:CIVIL]]:
         if not label or link not in label: # both are different, thus important:
-            label = '%s %s' % (link.replace(':', ''), label)
+            link = link.replace(':', '').replace(' ', '')
+            label = '%s %s' % (link, label)
         else: # Link text contains WikiLink; remove first colon:
+            # We can't remove spaces as we do not know where the WikiLink
+            # ends and where other text starts:
             label = label.replace(':', '', 1)
     return label
 

@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import re
-import sys
+from sys import path
+path.append('WikiCodeCleaner')
+
 from MagicWords import magicWordsRE
 from compact import compact
 from dropNested import *

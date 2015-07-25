@@ -106,11 +106,13 @@ EXT_IMAGE_REGEX = re.compile(
     re.X | re.S | re.U)
 
 def replaceExternalLinks(text):
-    textBeforeURI = label = ''
+    label = ''
+    cleanedText = []
     cur = 0
 
     for m in ExtLinkBracketedRegex.finditer(text):
-        textBeforeURI += text[cur:m.start()]
+        # append the text before the current URI:
+        cleanedText.append(text[cur:m.start()])
         cur = m.end()
 
         url = m.group(1)
@@ -129,6 +131,9 @@ def replaceExternalLinks(text):
         m = EXT_IMAGE_REGEX.match(label)
         if m: # external image, remove it
             label = ''
+        elif label:
+            cleanedText.append(label)
 
-    textAfterURI = text[cur:]
-    return " ".join([textBeforeURI, (label if label else ''), textAfterURI])
+    # append the text after the last URI:
+    cleanedText.append(text[cur:])
+    return " ".join(cleanedText)

@@ -1,7 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from findBalanced import findBalanced
 import re
+
+from sys import path
+path.append('WikiCodeCleaner')
+
+from findBalanced import findBalanced
 
 # WikiLinks
 # See https://www.mediawiki.org/wiki/Help:Links#Internal_links

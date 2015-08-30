@@ -6,48 +6,14 @@ import re
 templates = {}
 redirects = {}
 
-def dropSpans(spans, text):
-    """
-    Drop from text the blocks identified in :param spans:, possibly nested.
-    """
-    spans.sort()
-    res = ''
-    offset = 0
-    # s=position openDelim, e=position closeDelim:
-    for s, e in  spans:
-        if offset <= s:
-            if offset < s: # add text between two templates
-                res += text[offset:s]
-            offset = e
-    res += text[offset:]
-    return res
-
-regexSubstitutionPlaceholderString = 'SUBSTITUTED_TEMPLATE_FOR_REGEX_MATCHING'
-
-def replaceSpansWithRePattern(spans, text):
-    """
-    Drop from text the blocks identified in :param spans:, possibly nested.
-    """
-    spans.sort()
-    res = ''
-    offset = 0
-    # s=position openDelim, e=position closeDelim:
-    for s, e in  spans:
-        if offset <= s:
-            if offset < s: # add text between two templates
-                res += regexSubstitutionPlaceholderString + text[offset:s]
-            offset = e
-    res += regexSubstitutionPlaceholderString + text[offset:]
-    return res
-
-def dropNested(text, openDelim, closeDelim, handleSpans=dropSpans):
+def dropNested(text, openDelim, closeDelim):
     """
     A matching function for nested expressions, e.g. namespaces and tables.
     """
     openRE = re.compile(openDelim)
     closeRE = re.compile(closeDelim)
     # partition text in separate blocks { } { }
-    spans = []                  # pairs (s, e) for each partition
+    spans = []                # pairs (s, e) for each partition
     nest = 0                    # nesting level
     start = openRE.search(text, 0)
     if not start:
@@ -58,7 +24,7 @@ def dropNested(text, openDelim, closeDelim, handleSpans=dropSpans):
         next = openRE.search(text, next.end())
         if not next:            # termination
             while nest:         # close all pending
-                nest -= 1
+                nest -=1
                 end0 = closeRE.search(text, end.end())
                 if end0:
                     end = end0
@@ -89,7 +55,20 @@ def dropNested(text, openDelim, closeDelim, handleSpans=dropSpans):
         if next != start:
             # { { }
             nest += 1
-
     # collect text outside partitions
-    return handleSpans(spans, text)
+    return dropSpans(spans, text)
 
+def dropSpans(spans, text):
+    """
+    Drop from text the blocks identified in :param spans:, possibly nested.
+    """
+    spans.sort()
+    res = ''
+    offset = 0
+    for s, e in  spans:
+        if offset <= s:         # handle nesting
+            if offset < s:
+                res += text[offset:s]
+            offset = e
+    res += text[offset:]
+    return res

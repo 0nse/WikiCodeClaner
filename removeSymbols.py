@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 def removeSymbols(text):
     """Removes all symbols as they serve no
     semantical purpose for us."""

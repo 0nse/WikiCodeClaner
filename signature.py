@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 import re
 
 # ([[User talk:Any text|Any text]]) -- User_talk is also possible

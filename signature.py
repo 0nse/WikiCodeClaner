@@ -12,9 +12,9 @@ userRe = re.compile(r"(?i)\[\[User:[^\]]+\]\] \(" + talk + "\)")
 # e.g. 13:41, 9 Jun 2015 (UTC) -- the spaces after the comma and before the
 # bracket are optional. For simplicity reasons, we allow the month to appear
 # twice or not even once. Thus, incorrect timestamps are allowed but is highly unlikely.
-months = r' ?(?i)(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|Jun(e)?|Jul(y)?|Aug(ust)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)'
-#            \_____________________________________________________________________________________________________________/
-#                                                          Jun(e)
+months = r' ?(?i)(Jan(uary)?|Feb(ruary)?|Mar(ch)?|Apr(il)?|May|Jun(e)?|Jul(y)?|Aug(ust)?|Sep(tember)?|Oct(ober)?|Nov(ember)?|Dec(ember)?)'
+#            \___________________________________________________________________________________________________________________________/
+#                                                                         Jun(e)
 timestampRe = re.compile(r"\d{2}:\d{2},?%s? ?\d{1,2}%s? ?\d{4},? ?\(\w+\)" % (months, months))
 #                          \________/   \m/   \___/ \m/   \_/      \____/
 #                            13:41    ,?    ?   9        2015 ,? ? (UTC)

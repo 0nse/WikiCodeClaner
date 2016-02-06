@@ -15,7 +15,7 @@ In more detail, `WikiExtractor.py` has been adapted as follows:
 * Code cleanup (removed unused code and SoC).
 * Replace [many symbols](removeSymbols.py) with a space.
 * Remove [user and timestamp signatures](https://en.wikipedia.org/wiki/Wikipedia:Signatures) including a few customised ones.
-- Splilt the logoci into separate files. The entry point is [`clean.py`](clean.py).
+- Split the logic into separate files. The entry point is [`clean.py`](clean.py).
 
 ## WikiExtractor.py
 [WikiExtractor.py](http://medialab.di.unipi.it/wiki/Wikipedia_Extractor) is a Python script that extracts and cleans text from a [Wikipedia database dump](http://download.wikimedia.org/).
